@@ -116,7 +116,7 @@ class TinyGsmSMS {
     thisModem().sendAT(GF("+CMGF=1"));
     thisModem().waitResponse();
     // Set 8-bit hexadecimal alphabet (3GPP TS 23.038)
-    thisModem().sendAT(GF("+CSCS=\"HEX\""));
+    thisModem().sendAT(GF("+CSCS=\"GSM\""));
     thisModem().waitResponse();
     // Send the message
     thisModem().sendAT(GF("+CUSD=1,\""), code, GF("\""));
@@ -128,7 +128,7 @@ class TinyGsmSMS {
     int8_t dcs = thisModem().streamGetIntBefore('\n');
 
     if (dcs == 15) {
-      return TinyGsmDecodeHex8bit(hex);
+      return hex;
     } else if (dcs == 72) {
       return TinyGsmDecodeHex16bit(hex);
     } else {
